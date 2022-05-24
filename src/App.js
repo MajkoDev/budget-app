@@ -1,13 +1,18 @@
+import './App.css';
+
 // Components
 import Header from "./components/Header";
-
-import './App.css';
+import Balance from "./components/Balance";
+import AddTransaction from './components/AddTransaction';
 
 function App() {
   return (
     <div className="container">
       <div className="app-wrapper">
         <Header />
+        <Balance />
+        <AddTransaction />
+
       </div>
     </div>
   );
