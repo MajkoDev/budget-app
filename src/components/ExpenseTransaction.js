@@ -1,9 +1,9 @@
-const IncomeTransaction = ({ incomeTransaction }) => {
+const ExpenseTransaction = ({ expenseTransaction }) => {
   return (
     <li className='transaction'>
-      <span className='transaction-text'>{incomeTransaction.incomeText}</span>
+      <span className='transaction-text'>{expenseTransaction.incomeText}</span>
       <span className='transaction-amount'>
-        ${incomeTransaction.incomeAmount}
+        ${expenseTransaction.incomeAmount}
       </span>
       <button className='delete-btn'>
         <i className='fas fa-trash'></i>
@@ -12,4 +12,4 @@ const IncomeTransaction = ({ incomeTransaction }) => {
   );
 };
 
-export default IncomeTransaction;
+export default ExpenseTransaction;

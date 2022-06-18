@@ -1,18 +1,23 @@
-import React from 'react'
+import { useContext } from "react";
+import { GlobalContext } from "../context/GlobalState";
+import ExpenseTransaction from "./ExpenseTransaction";
 
 function ExpenseList() {
+  const { expenseTransactions } = useContext(GlobalContext);
+
   return (
-    <div className="transactions transactions-expense">
-        <h2>Transaction History</h2>
-        <ul className="transaction-list">
-            <span className="transaction-text">Rent</span>
-            <span className="transaction-amount">2000</span>
-            <button className="delete-btn">
-                <i className="fas fa-trash"></i>
-            </button>
-        </ul>
+    <div className='transactions transactions-expense'>
+      <h2>Transaction History</h2>
+      <ul className='transaction-list'>
+        {expenseTransactions.map((expenseTransaction) => (
+          <ExpenseTransaction
+            key={expenseTransaction.id}
+            expenseTransaction={expenseTransaction}
+          />
+        ))}
+      </ul>
     </div>
-  )
+  );
 }
 
-export default ExpenseList
+export default ExpenseList;
