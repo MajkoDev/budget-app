@@ -1,37 +1,58 @@
-import { createContext, useReducer } from "react";
-import AppReducer from "./AppReducer"
+import React, { createContext, useReducer, useEffect } from "react";
+import AppReducer from "./AppReducer";
 
 const initialState = {
-  incomeTransactions: [
-    { id: 1, incomeText: "Card sold", incomeAmount: 15000 },
-    { id: 2, incomeText: "Salary", incomeAmount: 5000 },
-    { id: 3, incomeText: "Bonus", incomeAmount: 13000 },
-  ],
-  expenseTransactions: [
-    { id: 4, incomeText: "Rent", incomeAmount: 1000 },
-    { id: 5, incomeText: "Bank", incomeAmount: 2000 },
-    { id: 6, incomeText: "Food", incomeAmount: 500 },
-  ],
+  incomeTransactions:
+    JSON.parse(localStorage.getItem("incomeTransactions")) || [],
+  expenseTransactions:
+    JSON.parse(localStorage.getItem("expenseTransactions")) || [],
 };
 
 export const GlobalContext = createContext(initialState);
 
 export const GlobalContextProvider = ({ children }) => {
-
   const [state, dispatch] = useReducer(AppReducer, initialState);
 
-  const addIncome = incomeTransaction => {
+  useEffect(() => {
+    localStorage.setItem(
+      "incomeTransactions",
+      JSON.stringify(state.incomeTransactions)
+    );
+    localStorage.setItem(
+      "expenseTransactions",
+      JSON.stringify(state.expenseTransactions)
+    );
+  });
+
+  const deleteTransaction = (id) => {
     dispatch({
-      type: 'ADD_INCOME', payload: incomeTransaction
-    })
-  }
+      type: "DELETE_TRANSACTION",
+      payload: id,
+    });
+  };
+
+  const addIncome = (incomeTransaction) => {
+    dispatch({
+      type: "ADD_INCOME",
+      payload: incomeTransaction,
+    });
+  };
+
+  const addExpense = (expenseTransaction) => {
+    dispatch({
+      type: "ADD_EXPENSE",
+      payload: expenseTransaction,
+    });
+  };
 
   return (
     <GlobalContext.Provider
       value={{
         incomeTransactions: state.incomeTransactions,
         expenseTransactions: state.expenseTransactions,
-        addIncome
+        deleteTransaction,
+        addIncome,
+        addExpense,
       }}>
       {children}
     </GlobalContext.Provider>
